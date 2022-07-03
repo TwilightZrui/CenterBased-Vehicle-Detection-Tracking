@@ -1,0 +1,259 @@
+nvidia-driver  450.51.05
+CUDA Version: 11.0
+cuDNN8.0.5
+python 3.7
+pytorch==1.7.1 
+torchvision==0.8.2 
+torchaudio==0.7.2 
+
+
+conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch
+
+1. 解决Intel AX200 Wifi6无线网卡无法驱动的问题
+
+到Intel官网下载驱动,20.04Kernel版本符合ax200的驱动要求
+解压后拷贝到/lib/firmware
+然后
+sudo add-apt-repository ppa:canonical-hwe-team/backport-iwlwifi
+sudo apt-get update
+sudo apt-get install backport-iwlwifi-dkms 
+安装完毕重启,无线网卡应该可以使用了
+
+
+
+
+Linux配置v2ray详细教程-Ubuntu为例
+https://mahongfei.com/1776.html
+
+Ubuntu 18.04 LTS操作系统的Conda安装及配置
+https://blog.csdn.net/fhxy_xzw/article/details/98595878
+
+
+【Linux】conda: command not found解决办法
+https://blog.csdn.net/weixin_38705903/article/details/86533863
+
+ubuntu18.04 安装 Google Chrome
+https://blog.csdn.net/qq_39418067/article/details/89647002
+
+
+选pytorch 
+https://pytorch.org/get-started/previous-versions/#conda-1
+
+ORG14重装机
+从win中卸载原来的ubuntu双系统：
+ubuntu18.04装载
+配翻墙
+org14内核
+
+
+terminator
+google-Chrome
+中文输入法
+
+cudatoolkit
+    测试：查看环境变量是否配置成功：nvcc -V。成功会显示CUDA信息。
+cuDNN
+    测试：
+    cp -r /usr/src/cudnn_samples_v8/ ~ 
+    cd ~/cudnn_samples_v8/mnistCUDNN/ 
+    make clean && make 
+    ./mnistCUDNN
+    if test passed  then successed
+
+pytorch （failed） && torchvision
+    测试：
+    import torch
+    x = torch.rand(5, 3)
+    print(x)
+    output:
+    tensor([[0.3380, 0.3845, 0.3217],
+            [0.8337, 0.9050, 0.2650],
+            [0.2979, 0.7141, 0.9069],
+            [0.1449, 0.1132, 0.1375],
+            [0.4675, 0.3947, 0.1426]])
+
+验证显卡驱动和CUDA是否已被启用并可被Pytorch访问：
+    测试：
+    import torch  # 可以import说明Pytorch安装成功
+    torch.cuda.is_available() #返回True则说明Pytorch可以在当前GPU上使用
+
+tensorflow
+    tensorflow  single 测试：
+    TensorFlow 2.0 test:
+    import tensorflow as tf
+    tf.compat.v1.disable_eager_execution()　＃保证sess.run()能够正常运行
+    hello = tf.constant('hello,tensorflow')
+    sess= tf.compat.v1.Session()＃版本2.0的函数
+    print(sess.run(hello))
+
+
+    tensorflow and cuda 测试：(failed )
+    /home/twilight/project/test tensorflow_test.py
+
+##############
+InvalidArchiveError('Error with archive /home/twilight/anaconda3/pkgs/pytorch-1.7.1-py3.7_cuda11.0.221_cudnn8.0.5_0.tar.bz2.  
+You probably need to delete and re-download or re-create this file.  Message from libarchive was:\n\ntruncated bzip2 input (errno=-1, retcode=-30, archive_p=93831085324288)')
+pytorch-1.7.1-py3.7_cuda11.0.221_cudnn8.0.5_0.tar.bz2.
+
+
+(base) twilight@ORG: ~$ pip3 install tensorflow-gpu==2.4.0 -i https://pypi.douban.com/simple
+
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+astroid 2.2.5 requires typed-ast>=1.3.0; implementation_name == "cpython", which is not installed.
+
+(base) twilight@ORG: ~$ pip3 install typed-ast==2.4.0 -i https://pypi.douban.com/simple
+Looking in indexes: https://pypi.douban.com/simple
+ERROR: Could not find a version that satisfies the requirement typed-ast==2.4.0
+ERROR: No matching distribution found for typed-ast==2.4.0
+WARNING: You are using pip version 21.0.1; however, version 21.2.1 is available.
+You should consider upgrading via the '/home/twilight/anaconda3/bin/
+python3 -m pip install --user --upgrade pip
+
+
+(base) twilight@ORG: ~/project/test$ python tensorflow_test.py 
+2021-07-29 22:10:56.760106: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-07-29 22:10:57.726623: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-07-29 22:10:57.727443: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-07-29 22:10:57.752628: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-29 22:10:57.752952: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce RTX 2060 with Max-Q Design computeCapability: 7.5
+coreClock: 1.185GHz coreCount: 30 deviceMemorySize: 5.79GiB deviceMemoryBandwidth: 245.91GiB/s
+2021-07-29 22:10:57.752996: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-07-29 22:10:57.754789: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-07-29 22:10:57.754887: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-07-29 22:10:57.755736: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-07-29 22:10:57.756181: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-07-29 22:10:57.758173: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-07-29 22:10:57.758824: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-07-29 22:10:57.759158: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-07-29 22:10:57.759373: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-29 22:10:57.759825: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-29 22:10:57.760101: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-07-29 22:10:57.760164: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Traceback (most recent call last):
+  File "tensorflow_test.py", line 4, in <module>
+    device_name = tf.test.gpu_device_name()
+  File "/home/twilight/anaconda3/lib/python3.7/site-packages/tensorflow/python/framework/test_util.py", line 132, in gpu_device_name
+    for x in device_lib.list_local_devices():
+  File "/home/twilight/anaconda3/lib/python3.7/site-packages/tensorflow/python/client/device_lib.py", line 43, in list_local_devices
+    _convert(s) for s in _pywrap_device_lib.list_devices(serialized_config)
+RuntimeError: CUDA runtime implicit initialization on GPU:0 failed. Status: out of memory
+
+RuntimeError: CUDA runtime implicit initialization on GPU:0 failed. Status: out of memory
+
+https://blog.csdn.net/ayiya_Oese/article/details/114022167
+
+
+
+centerpoint :
+
+git 加速
+APEX
+spconv
+det3D环境部署
+再bash setup.sh
+
+spconv  
+python setup.py bdist_wheel
+
+CMake install
+https://www.cnblogs.com/yanqingyang/p/12731855.html
+-- Found cuDNN: v?  (include: /usr/local/cuda/include, library: /usr/local/cuda/lib64/libcudnn.so)
+CMake Error at /home/twilight/.conda/envs/cp2/lib/python3.7/site-packages/torch/share/cmake/Caffe2/public/cuda.cmake:174 (message):
+  PyTorch requires cuDNN 7 and above.
+Call Stack (most recent call first):
+  /home/twilight/.conda/envs/cp2/lib/python3.7/site-packages/torch/share/cmake/Caffe2/Caffe2Config.cmake:88 (include)
+  /home/twilight/.conda/envs/cp2/lib/python3.7/site-packages/torch/share/cmake/Torch/TorchConfig.cmake:40 (find_package)
+  CMakeLists.txt:23 (find_package)
+
+  https://blog.csdn.net/baidu_38505667/article/details/114011051
+确保你已经把cudnn中的cudnn_version.h复制到了cuda目录（新版本cudnn的版本信息包含在cudnn_version.h而不是cudnn.h，安装cudnn时把所有cudnn开头的都复制过去）
+
+修改libtorch/share/cmake/Caffe2/public/cuda.cmake at line 148
+
+替换 : file(READ ${CUDNN_INCLUDE_PATH}/cudnn.h CUDNN_HEADER_CONTENTS)
+为 : file(READ ${CUDNN_INCLUDE_PATH}/cudnn_version.h CUDNN_HEADER_CONTENTS)
+
+tar -xvf cmake-3.18.0.tar.gz
+./bootstrap
+make 
+make install
+
+訓練 推理 測試？
+先用pip list看到我所安裝的包
+
+遇到的setup.sh的問題，直接google 在git上面找，一般遇到的問題都能在git 社區上找到
+看懂他安裝的庫就可以
+setup.sh就是安裝了ded3d的庫，只用在這兩個就可以
+英文叫什麼會叫
+
+pp模型 實時性好，準確率低（什麼是效果），大概2 3 鎮出效果，肉眼可見的低，檢車人估計不大行
+v效果好，實時性低
+一般點雲都是100ms一幀
+
+pp模型一般用第三個，第二個第三個一樣
+
+cp只是做dec，tracking是離線的，就是把所有的dec出了結果以後再生成tracking
+需要自己寫一部分代碼
+在測試的時候，先測試dec，dec沒問題了，tracking就可以了（it has）
+
+在single_infernece中，直接寫了ros的藉口，可以直接在ros上用，他輸出電暈，和bonging box
+如果做tracking的話，需要在rviz中添加對mark的追蹤，
+single_infernece這個文件寫的比較規範，以後也可以用，x y點顯示，這個代碼要看
+
+測試數據的時候是用train數據做的，因爲test數據集是沒有標註的，如果測試的話需要上傳到他的服務器上進行測試
+
+mmdet中的tools有一些工具可以看看，在tools裡面
+
+如果可視化tracking的結果，可以用open3D，要看他的，藥接口，學一陣子
+
+nuScenes detection task排行榜,tasks：
+第一名是Centerpoint-Fusion，它做的是融合，自然效果好
+CenterPoint v2是centerpoint
+https://www.nuscenes.org/object-detection?externalData=all&mapData=all&modalities=Any
+
+模型文件：https://drive.google.com/drive/folders/1K_wHrBo6yRSG7H7UUjKI4rPnyEA8HvOp
+用mini數據集，改一下執行test的名稱
+
+baseline centerpoint的baseline 
+
+mmdetection3d/tools/有很多可以學的
+mmdetection3d/tools/misc/ 有可視化
+mmdetection3d/tools/misc/visualize_results.py 
+mmdetection3d/mmdet3d/core/visualizer/open3d_vis.py 
+https://github.com/open-mmlab/mmdetection3d
+
+
+
+‘AT_CHECK’ was not declared in this scope AT_CHECK(weight.ndimension() == 4'
+https://github.com/open-mmlab/mmediting/issues/84
+
+https://github.com/poodarchu/Det3D
+
+open3d可視化3d檢測結果
+3D可视化神器之Open3D
+https://zhuanlan.zhihu.com/p/57215172
+
+KITTI 目标检测结果的点云可视化
+https://www.pianshen.com/article/73621695434/
+
+OPEN3D 可视化使用
+https://blog.csdn.net/weixin_43847196/article/details/106956427
+
+
+
+为什么不翻墙就不能上网
+为什么网卡驱动安装了但是不能连接wifi
+显示屏输出
+
+
+
+python ./tools/dist_test.py /home/twilight/project/cp2/CenterPoint/configs/nusc/pp 
+--work_dir /home/twilight/project/cp2/CenterPoint/configs/nusc/pp/nusc_centerpoint_pp_02voxel_two_pfn_10sweep_demo.py 
+--checkpoint /home/twilight/project/cp2/CenterPoint/configs/nusc/pp/nusc_centerpoint_pp_02voxel_two_pfn_10sweep_demo.py /latest.pth --speed_test 
+
+
+python ./tools/dist_test.py CONFIG_PATH --work_dir work_dirs/CONFIG_NAME --checkpoint work_dirs/CONFIG_NAME/latest.pth --speed_test 
+
+Python 3.7.10
+
