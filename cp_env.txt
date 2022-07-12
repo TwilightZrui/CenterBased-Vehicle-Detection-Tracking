@@ -1,0 +1,9 @@
+nvidia-driver  450.51.05
+CUDA Version: 11.0
+cuDNN8.0.5
+python 3.7
+pytorch==1.7.1 
+torchvision==0.8.2 
+torchaudio==0.7.2 
+
+conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch
